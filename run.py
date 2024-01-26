@@ -81,6 +81,27 @@ def calculte_surplus_data(sales_row):
     return surplus_data
 
 
+def get_last_5_entries_sales():
+    """
+    Collects columns of data from sales worksheet
+    """
+    sales = SHEET.worksheet("sales")
+
+    colums = []
+    for column in range(1,7):
+        column = sales.col_values(column)
+        column = [int(x) for x in column[-5:]]
+        colums.append(column)
+    return colums
+
+def calculate_average(data):
+    ave_list = []
+    for lst in data:
+        total = 0
+        for num in lst:
+            total+=num
+        ave_list.append(total//5)
+    print(ave_list)
 
 def main():
     """
@@ -92,5 +113,6 @@ def main():
     new_surplus_data = calculte_surplus_data(sales_data)
     update_worksheet(new_surplus_data,"surplus")
 
-main()
-
+#main()
+sales_columns = get_last_5_entries_sales()
+calculate_average(sales_columns)
